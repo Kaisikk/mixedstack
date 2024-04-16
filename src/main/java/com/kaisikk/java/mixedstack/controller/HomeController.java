@@ -1,4 +1,4 @@
-package com.kaisikk.java.mixedstack;
+package com.kaisikk.java.mixedstack.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
