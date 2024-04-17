@@ -2,7 +2,10 @@ package com.kaisikk.java.mixedstack.controller;
 
 import com.kaisikk.java.mixedstack.domain.Book;
 import com.kaisikk.java.mixedstack.repo.BookRepo;
+
 import java.util.Arrays;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +14,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -38,11 +41,20 @@ class BookControllerTest {
         mockMvc.perform(get("/api"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[*].id", containsInAnyOrder(1,2)));
+                .andExpect(jsonPath("$[*].id", containsInAnyOrder(1, 2)));
 
     }
 
     @Test
-    void getBookById() {
+    void getBookById() throws Exception {
+
+        when(bookRepo.findById(anyLong())).thenReturn(Optional.of(
+                new Book(1L, "akka in action", "willaims"))
+        );
+
+        mockMvc.perform(get("/api/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", equalTo(1)))
+                .andExpect(jsonPath("$.author", equalTo("willaims")));
     }
 }
