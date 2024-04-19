@@ -14,16 +14,32 @@ public class HomeController {
     @Autowired
     private BookRepo repo;
 
+    /**
+     * Начальная страница
+     *
+     * @return String
+     */
     @GetMapping
     public String  index(){
         return "index";
     }
 
+    /**
+     * Вторая тестовая страница
+     *
+     * @return String
+     */
     @GetMapping("second")
     public String second(){
         return "second";
     }
 
+    /**
+     * Наполнение html страницы с найденными объектами
+     *
+     * @param model
+     * @return String
+     */
     @GetMapping("/html/books")
     public String getAllBooks(Model model){
         model.addAttribute("books",repo.findAll());

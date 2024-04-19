@@ -11,6 +11,9 @@ import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Тесты на репозиторий
+ */
 @RunWith(SpringRunner.class)
 @DataJpaTest
 class BookRepoTest {
@@ -20,21 +23,26 @@ class BookRepoTest {
 
     @Test
     void findByNameAndAuthor() {
+        // проверяем есть ли в репе данные
        assert(!bookRepo.findAll().iterator().hasNext());
 
+       // пытаемся сохранить объект
         Book book = bookRepo.save(new Book("akka in action", "willaims"));
 
+        // проверяем наполнение сохраненного ответа
         assertTrue(bookRepo.findByNameAndAuthor("akka in action", "willaims").get().getId() == book.getId());
     }
 
     @Test
     public void findAll(){
+        // проверка, что в репе есть элементы
         assert(!bookRepo.findAll().iterator().hasNext());
 
         bookRepo.save(new Book("akka in action", "willaims"));
         bookRepo.save(new Book("scala professional programming", "odersky"));
         bookRepo.save(new Book("selfish gen", "dawkins"));
 
+        // проверка сколько элементов в репе
         assertTrue(StreamSupport.stream(bookRepo.findAll().spliterator(), false).count() == 3);
     }
 

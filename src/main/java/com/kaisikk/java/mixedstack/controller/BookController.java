@@ -12,14 +12,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api", produces = "application/json")
 public class BookController {
 
+    // репа для энтити
     @Autowired
     private BookRepo bookRepo;
 
+    /**
+     * Получение всех книг
+     *
+     * @return
+     */
     @GetMapping
     public Iterable<Book> getAllBooks(){
         return bookRepo.findAll();
     }
 
+    /**
+     * Поиск книги по id
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public Book getBookById(@PathVariable("id") Long id){
         return bookRepo.findById(id).get();

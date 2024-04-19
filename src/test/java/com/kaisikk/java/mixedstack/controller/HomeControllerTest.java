@@ -28,20 +28,31 @@ class HomeControllerTest {
     @MockBean
     private BookRepo repo;
 
+    /**
+     * Вызываем получение html страницы
+     *
+     * @throws Exception
+     */
     @Test
     void index() throws Exception {
+        // вызываем контроллер
         mockMvc.perform(get("/"))
+                // проверяем код ответа
                 .andExpect(status().isOk())
+                // проверяем имя view
                 .andExpect(view().name("index"))
+                // проверяем содержит ли контент строку
                 .andExpect(content().string(containsString("Index Page")));
     }
 
     @Test
     void getAllBooks() throws Exception {
+        // мокаем репу для текущего теста
         when(repo.findAll()).thenReturn(Arrays.asList(
                 new Book(1L, "akka in action", "williams"),
                 new Book(2L, "scala professional programming", "odersky")));
 
+        // проверяем имя view и ее наполнение
         mockMvc.perform(get("/html/books"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("books"))

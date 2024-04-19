@@ -13,6 +13,12 @@ public class MixedstackApplication {
         SpringApplication.run(MixedstackApplication.class, args);
     }
 
+    /**
+     * Наполнение временной базы
+     *
+     * @param repo
+     * @return CommandLineRunner
+     */
     public CommandLineRunner commandLineRunner (BookRepo repo){
         return args -> {
             repo.save(new Book("akka in action", "willams"));

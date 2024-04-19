@@ -48,10 +48,12 @@ class BookControllerTest {
     @Test
     void getBookById() throws Exception {
 
+        // мок на репозиторий
         when(bookRepo.findById(anyLong())).thenReturn(Optional.of(
                 new Book(1L, "akka in action", "willaims"))
         );
 
+        // вызаываем страницу и проверяем статут и наполнение ответа
         mockMvc.perform(get("/api/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", equalTo(1)))
