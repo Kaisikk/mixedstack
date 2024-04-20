@@ -1,6 +1,7 @@
 package com.kaisikk.java.mixedstack.controller;
 
 import com.kaisikk.java.mixedstack.repo.BookRepo;
+import com.kaisikk.java.mixedstack.service.Calculate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,9 @@ public class HomeController {
     @Autowired
     private BookRepo repo;
 
+    @Autowired
+    Calculate calculate;
+
     /**
      * Начальная страница
      *
@@ -21,6 +25,8 @@ public class HomeController {
      */
     @GetMapping
     public String  index(){
+        int res = calculate.sum(2, 3);
+        System.out.println("**********" + res);
         return "index";
     }
 
@@ -31,6 +37,8 @@ public class HomeController {
      */
     @GetMapping("second")
     public String second(){
+        int res = calculate.sum(2, 33);
+        System.out.println("**********" + res);
         return "second";
     }
 
